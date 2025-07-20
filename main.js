@@ -86,7 +86,7 @@ function SendRequest() {
         }
     })
     .then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
     })
     .catch(error => {
     console.error('请求失败:', error.message);
@@ -142,7 +142,7 @@ function getBody() {
     data.push(page)
     return data?'data='+JSON.stringify(data):''
 }
-// SendRequest()
+SendRequest()
 // SendRequest()
 // let i = 0
 // let interval = setInterval(() => {
@@ -153,7 +153,7 @@ function getBody() {
 //     SendRequest()
 // }, 5000);
 
-getFeatures()
+// getFeatures()
 // getMatomo()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
