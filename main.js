@@ -155,6 +155,7 @@ SendRequest()
 
 // getFeatures()
 // getMatomo()
+getIdentity()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
@@ -190,12 +191,13 @@ function getIdentity() {
     const url = `https://data.similarweb.com/api/v1/identity`
     axios.get(url, {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'cookie': 'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285; _gcl_au=1.1.168098564.1752845287; _ga=GA1.1.945399864.1752845287; FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287; FPAU=1.1.168098564.1752845287; sgID=f48cc37f-1837-b0c3-66d0-e8c1bb00eaa9; _pk_id.1.fd33=0933d9873972ecfe.1752845293.; sw_extension_installed=1752845293362; _ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216; gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D'
         },
         maxRedirects: 5
     })
     .then(res => {
-        console.log(res)
+        console.log(res.data)
     })
 }
 function getMatomo() {

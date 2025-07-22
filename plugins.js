@@ -60,7 +60,7 @@ function getRankBody() {
 
 function getMatomoParams(domain) {
     const time = new Date()
-    const e_c = 'screen'//extension
+    const e_c = 'screen'//extension"screen", "view", "opt in
     const e_a = 'view'//scroll
     const e_n = 'data/iploong.com/non-paying marketing'//100% //data/bitip.com/non-registered
     const ca = '1'
