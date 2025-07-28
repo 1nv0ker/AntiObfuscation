@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { et } = require('./mixpanel.js')
+const { _t } = require('./mixpanelNew.js')
 const {HttpsProxyAgent} = require('https-proxy-agent');
 const {HttpProxyAgent} = require('http-proxy-agent');
 const { getMatomoParams } = require('./plugins.js')
@@ -62,7 +62,7 @@ function SendRequest() {
     // return
     const axiosInstance = axios.create({
         // httpsAgent,
-        timeout:1000,
+        timeout:0,
         // httpAgent
     });
     const time = new Date().getTime()
@@ -86,7 +86,7 @@ function SendRequest() {
         }
     })
     .then((res) => {
-        // console.log('res', res)
+        console.log('res', res.data)
     })
     .catch(error => {
     console.error('请求失败:', error.message);
@@ -121,6 +121,7 @@ function getRandomInt(min, max) {
 }
 function getBody() {
     let data = []
+    const et = _t
     const identify = et.track('$identify', {
         distinct_id: et.get_distinct_id(),
         $anon_distinct_id: et.get_distinct_id()
@@ -155,7 +156,7 @@ SendRequest()
 
 // getFeatures()
 // getMatomo()
-getIdentity()
+// getIdentity()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
@@ -247,8 +248,15 @@ function getRank() {
 
 function getFeatures() {
     const url = 'https://cdn.growthbook.io/api/features/sdk-qbggv9YxTIirakmd'
-    axios.get(url)
+    axios.get(url, {
+        headers: {
+            "sec-ch-ua-platform":"Windows",
+            "sec-ch-ua-mobile":"?0",
+            "sec-ch-ua":`"Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"`,
+            "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
+        }
+    })
     .then(res => {
-        console.log('res', JSON.stringify(res.data))
+        console.log('res', res)
     })
 }

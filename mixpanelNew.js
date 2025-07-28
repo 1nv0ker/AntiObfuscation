@@ -1788,10 +1788,10 @@ var t,
           } catch (e) {
             l.report_error(e), i = false;
           } else {
-            var m = P.createElement("script");
-            m.type = "text/javascript", m.async = true, m.defer = true, m.src = e;
-            var g = P.getElementsByTagName("script")[0];
-            g.parentNode.insertBefore(m, g);
+            // var m = P.createElement("script");
+            // m.type = "text/javascript", m.async = true, m.defer = true, m.src = e;
+            // var g = P.getElementsByTagName("script")[0];
+            // g.parentNode.insertBefore(m, g);
           }
           return i;
         }, ut.prototype._execute_array = function (e) {
@@ -2177,5 +2177,9 @@ var t,
         var _t = gt();
         
         _t.init('7ccb86f5c2939026a4b5de83b5971ed9', undefined)
-        console.log(_t.people)
+_t.init('7ccb86f5c2939026a4b5de83b5971ed9', undefined)
+
+module.exports = {
+  _t
+}
   
