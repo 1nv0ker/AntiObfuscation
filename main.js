@@ -231,15 +231,45 @@ function getIdentity() {
         console.log(res.data)
     })
 }
-function getMatomo() {
-    const data = getMatomoParams('www.iploong.com')
+async function getMatomo() {
+    const uuid = generateUUID()
+    const data = getMatomoParams('www.iploong.com', uuid)
     // console.log(encodeURI(data))
     const url = `https://matomo.similarweb.io/matomo.php?`+data
 //     axiosInstance.get('https://api.ipify.org?format=json')
 //     .then(response => {
 //     console.log('当前服务器公网IP:', response.data.ip);
 //   })
-    axiosInstance.post(url, null, {
+    await axiosInstance.post(url, null, {
+        
+        headers: {
+            'Dnt': '1',
+            "Content-Type":'application/x-www-form-urlencoded; charset=utf-8',
+            "Priority":'u=4, i',
+            "Origin":'chrome-extension://lgecefcjlholabgliikbfdifhdfbfnma',
+            "Sec-Ch-Ua":`"Not)A;Brand";v="8", "Chromium";v="138", "Microsoft Edge";v="138"`,
+            "Sec-Ch-Ua-Mobile":'?0',
+            "Sec-Ch-Ua-Platform":`"Windows"`,
+            "User-Agent":`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0`,
+            "Sec-Fetch-Dest":"empty",
+            "Sec-Fetch-Mode":"no-cors",
+            "Sec-Fetch-Site":"none",
+            "Sec-Fetch-Storage-Access":"active",
+            "Accept":"*/*",
+            "Accept-Encoding":"gzip, deflate, br, zstd",
+            "Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+            "Content-Length":"0"
+        }
+    })
+    .then((res) => {
+        const ip = res.request.socket.remoteAddress
+        // console.log('res',  res.request._headers)
+        console.log('res',  res.status)
+        console.log('ip', ip)
+    })
+    const data2 = getMatomoParams('www.iploong.com', uuid, 2)
+    const url2 = `https://matomo.similarweb.io/matomo.php?`+data2
+    await axiosInstance.post(url2, null, {
         
         headers: {
             'Dnt': '1',
