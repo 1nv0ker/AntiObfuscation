@@ -3,21 +3,21 @@ const { _t } = require('./mixpanelNew.js')
 const {HttpsProxyAgent} = require('https-proxy-agent');
 const {HttpProxyAgent} = require('http-proxy-agent');
 const { getMatomoParams } = require('./plugins.js')
-const proxyString = `proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-5390564_l-30:127939ghg92g2f28
-proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-642762_l-30:127939ghg92g2f28
-proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-5877666_l-30:127939ghg92g2f28
-proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-59820_l-30:127939ghg92g2f28
-proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-951691532_l-30:127939ghg92g2f28
-proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-568171905_l-30:127939ghg92g2f28
-proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-8285744_l-30:127939ghg92g2f28
-proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-45241286_l-30:127939ghg92g2f28
-proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-1325572_l-30:127939ghg92g2f28
-proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-403317177_l-30:127939ghg92g2f28`
+const proxyString = `proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-765029642_l-10:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-46540_l-10:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-2845869_l-10:127939ghg92g2f28
+proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-122270_l-10:127939ghg92g2f28
+proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-3004608_l-10:127939ghg92g2f28
+proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-3925206_l-10:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-77467617_l-10:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-38778995_l-10:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-253952097_l-10:127939ghg92g2f28
+proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-80420_l-10:127939ghg92g2f28`
 const cookies = [
     'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285',
     "_gcl_au=1.1.168098564.1752845287",
     "_ga=GA1.1.945399864.1752845287",
-    "sgID=f48cc37f-1837-b0c3-66d0-e8c1bb00eaa9",
+    "sgID=28fb5f2c-c97d-4fa4-a0f5-630d583504d2",
     "FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287",
     "FPAU=1.1.168098564.1752845287",
     "_pk_id.1.fd33=0933d9873972ecfe.1752845293.",
@@ -25,6 +25,13 @@ const cookies = [
     "_ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216",
     "gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D"
 ]
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 const proxyConfig = getProxyConfig()
 const httpsAgent = new HttpsProxyAgent({
     host: proxyConfig.host,
@@ -169,6 +176,7 @@ function getBody() {
 // getFeatures()
 getMatomo()
 // getIdentity()
+// getRank()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
