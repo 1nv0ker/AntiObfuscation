@@ -3,17 +3,28 @@ const { _t } = require('./mixpanelNew.js')
 const {HttpsProxyAgent} = require('https-proxy-agent');
 const {HttpProxyAgent} = require('http-proxy-agent');
 const { getMatomoParams } = require('./plugins.js')
-const proxyString = `proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-89223_l-10:127939ghg92g2f28
-proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-9491380_l-10:127939ghg92g2f28
-proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-284708_l-10:127939ghg92g2f28
-proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-3173273_l-10:127939ghg92g2f28
-proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-454686_l-10:127939ghg92g2f28
-proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-47803987_l-10:127939ghg92g2f28
-proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-1144247_l-10:127939ghg92g2f28
-proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-81819955_l-10:127939ghg92g2f28
-proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-6382904_l-10:127939ghg92g2f28
-proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-707758_l-10:127939ghg92g2f28`
-
+const proxyString = `proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-5390564_l-30:127939ghg92g2f28
+proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-642762_l-30:127939ghg92g2f28
+proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-5877666_l-30:127939ghg92g2f28
+proxy.bitip.com:10004:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-59820_l-30:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-951691532_l-30:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-568171905_l-30:127939ghg92g2f28
+proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-8285744_l-30:127939ghg92g2f28
+proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-45241286_l-30:127939ghg92g2f28
+proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-1325572_l-30:127939ghg92g2f28
+proxy.bitip.com:10003:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-403317177_l-30:127939ghg92g2f28`
+const cookies = [
+    'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285',
+    "_gcl_au=1.1.168098564.1752845287",
+    "_ga=GA1.1.945399864.1752845287",
+    "sgID=f48cc37f-1837-b0c3-66d0-e8c1bb00eaa9",
+    "FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287",
+    "FPAU=1.1.168098564.1752845287",
+    "_pk_id.1.fd33=0933d9873972ecfe.1752845293.",
+    "sw_extension_installed=1752845293362",
+    "_ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216",
+    "gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D"
+]
 const proxyConfig = getProxyConfig()
 const httpsAgent = new HttpsProxyAgent({
     host: proxyConfig.host,
@@ -143,7 +154,8 @@ function getBody() {
     data.push(page)
     return data?'data='+JSON.stringify(data):''
 }
-SendRequest()
+// getConfigData()
+// getIdentity()
 // SendRequest()
 // let i = 0
 // let interval = setInterval(() => {
@@ -155,7 +167,7 @@ SendRequest()
 // }, 5000);
 
 // getFeatures()
-// getMatomo()
+getMatomo()
 // getIdentity()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
@@ -175,27 +187,37 @@ function getConfigJson() {
     })
 }
 function getConfigData() {
-    const url = `https://data.similarweb.com/api/v1/data?domain=https://www.iploong.com`
+    const url = `https://data.similarweb.com/api/v1/data?domain=baidu.com`
     axios.get(url, {
         headers:{
+             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
             "Content-Type": "application/json",
-            "X-Extension-Version": '6.12.9',
-            "Cookie":"sgID=e896d91c-332a-4a9c-9025-aa87544ad2c2",
-            "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
+            "DNT":1,
+            "Priority":"u=1, i",
+            "X-extension-version":"6.12.9",
+            "Accept-language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+            Cookie:cookies.join('; ')
         }
     })
     .then(res => {
         console.log(res)
     })
 }
+
 function getIdentity() {
     const url = `https://data.similarweb.com/api/v1/identity`
     axios.get(url, {
         headers: {
+           "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
             "Content-Type": "application/json",
-            'cookie': 'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285; _gcl_au=1.1.168098564.1752845287; _ga=GA1.1.945399864.1752845287; FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287; FPAU=1.1.168098564.1752845287; sgID=f48cc37f-1837-b0c3-66d0-e8c1bb00eaa9; _pk_id.1.fd33=0933d9873972ecfe.1752845293.; sw_extension_installed=1752845293362; _ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216; gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D'
+            "DNT":1,
+            "Priority":"u=1, i",
+            "X-extension-version":"6.12.9",
+            "Accept-language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+            Cookie:cookies.join('; ')
+            
         },
-        maxRedirects: 5
+        
     })
     .then(res => {
         console.log(res.data)
