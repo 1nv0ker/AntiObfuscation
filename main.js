@@ -174,9 +174,10 @@ function getBody() {
 // }, 5000);
 
 // getFeatures()
-getMatomo()
+// getConfig()
 // getIdentity()
 // getRank()
+getMatomo()
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
@@ -194,9 +195,9 @@ function getConfigJson() {
         console.log('res', res.data)
     })
 }
-function getConfigData() {
-    const url = `https://data.similarweb.com/api/v1/data?domain=baidu.com`
-    axios.get(url, {
+async function getConfigData(uuid) {
+    const url = `https://data.similarweb.com/api/v1/data?domain=iploong.com`
+    return await axios.get(url, {
         headers:{
              "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
             "Content-Type": "application/json",
@@ -204,11 +205,12 @@ function getConfigData() {
             "Priority":"u=1, i",
             "X-extension-version":"6.12.9",
             "Accept-language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-            Cookie:cookies.join('; ')
+            // Cookie:cookies.join('; ')
+            Cookie:`sgID=${uuid}`
         }
     })
     .then(res => {
-        console.log(res)
+       console.log(res.data)
     })
 }
 
@@ -233,6 +235,7 @@ async function getIdentity(uuid) {
 }
 async function getMatomo() {
     const uuid = generateUUID()
+    await getConfigData(uuid)
     await getIdentity(uuid)
     const data = getMatomoParams('www.iploong.com', uuid)
     // console.log(encodeURI(data))
