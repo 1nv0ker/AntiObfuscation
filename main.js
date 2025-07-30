@@ -14,16 +14,16 @@ proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-38778995_l-10
 proxy.bitip.com:10002:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-253952097_l-10:127939ghg92g2f28
 proxy.bitip.com:10001:1c7t3eykxutgrbitip_g-US_f-g9b029gh9g983g_sid-80420_l-10:127939ghg92g2f28`
 const cookies = [
-    'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285',
-    "_gcl_au=1.1.168098564.1752845287",
-    "_ga=GA1.1.945399864.1752845287",
+    // 'Hm_lvt_427c0b22bf914797e3b57a7be7db74fe=1752845285',
+    // "_gcl_au=1.1.168098564.1752845287",
+    // "_ga=GA1.1.945399864.1752845287",
     "sgID=28fb5f2c-c97d-4fa4-a0f5-630d583504d2",
-    "FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287",
-    "FPAU=1.1.168098564.1752845287",
-    "_pk_id.1.fd33=0933d9873972ecfe.1752845293.",
-    "sw_extension_installed=1752845293362",
-    "_ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216",
-    "gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D"
+    // "FPID=FPID2.2.mMy%2BQYITPvJpLOy6GgS%2BFA41Wu2IesycHBYjWAXf7U8%3D.1752845287",
+    // "FPAU=1.1.168098564.1752845287",
+    // "_pk_id.1.fd33=0933d9873972ecfe.1752845293.",
+    // "sw_extension_installed=1752845293362",
+    // "_ga_V5DSP51YD0=GS2.1.s1752894986$o2$g0$t1752894986$j60$l0$h578684216",
+    // "gtmIdnts=%7B%22ga_cid%22%3A%22945399864.1752845287%22%2C%22ga_fpid%22%3A%22945399864.1752845287%22%2C%22ga_session_id%22%3A%221752894986%22%7D"
 ]
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -212,9 +212,9 @@ function getConfigData() {
     })
 }
 
-function getIdentity() {
+async function getIdentity(uuid) {
     const url = `https://data.similarweb.com/api/v1/identity`
-    axios.get(url, {
+    return await axios.get(url, {
         headers: {
            "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0",
             "Content-Type": "application/json",
@@ -222,7 +222,7 @@ function getIdentity() {
             "Priority":"u=1, i",
             "X-extension-version":"6.12.9",
             "Accept-language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-            Cookie:cookies.join('; ')
+            Cookie:`sgID=${uuid}`
             
         },
         
@@ -233,6 +233,7 @@ function getIdentity() {
 }
 async function getMatomo() {
     const uuid = generateUUID()
+    await getIdentity(uuid)
     const data = getMatomoParams('www.iploong.com', uuid)
     // console.log(encodeURI(data))
     const url = `https://matomo.similarweb.io/matomo.php?`+data
