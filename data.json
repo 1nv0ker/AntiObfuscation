@@ -1,0 +1,54 @@
+[
+    {
+        "event": "screen",
+        "properties": {
+            "$os": "Windows",
+            "$browser": "Microsoft Edge",
+            "$current_url": "chrome-extension://lgecefcjlholabgliikbfdifhdfbfnma/panel/panel.html?domain=www.iploong.com",
+            "$browser_version": 114,
+            "$screen_height": 1080,
+            "$screen_width": 1920,
+            "mp_lib": "web",
+            "$lib_version": "2.45.0",
+            "$insert_id": "d886kny6hmocp21m",
+            "time": 1752741445.3,
+            "distinct_id": "19815e7de3ffa-0212b19544e48a-7e565473-1fa400-19815e7de401365",
+            "$device_id": "19815e7de3ffa-0212b19544e48a-7e565473-1fa400-19815e7de401365",
+            "$initial_referrer": "$direct",
+            "$initial_referring_domain": "$direct",
+            "sgId": "149f3eb6-6a0d-d60b-2b15-24f0c4a2d703",
+            "site_type": "similarweb extension",
+            "action": "view",
+            "event_name": "data",
+            "event_sub_name": "iploong.com",
+            "event_sub_sub_name": "non-registered",
+            "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+        }
+    },
+    {
+        "event": "extension",
+        "properties": {
+            "$os": "Windows",
+            "$browser": "Microsoft Edge",
+            "$current_url": "chrome-extension://lgecefcjlholabgliikbfdifhdfbfnma/panel/panel.html?domain=www.iploong.com",
+            "$browser_version": 114,
+            "$screen_height": 1080,
+            "$screen_width": 1920,
+            "mp_lib": "web",
+            "$lib_version": "2.45.0",
+            "$insert_id": "vycfbmhxhwce4o8v",
+            "time": 1752741447.772,
+            "distinct_id": "19815e7de3ffa-0212b19544e48a-7e565473-1fa400-19815e7de401365",
+            "$device_id": "19815e7de3ffa-0212b19544e48a-7e565473-1fa400-19815e7de401365",
+            "$initial_referrer": "$direct",
+            "$initial_referring_domain": "$direct",
+            "sgId": "149f3eb6-6a0d-d60b-2b15-24f0c4a2d703",
+            "site_type": "similarweb extension",
+            "action": "scroll",
+            "event_name": "100%",
+            "event_sub_name": "none",
+            "event_sub_sub_name": "none",
+            "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+        }
+    }
+]

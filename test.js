@@ -81,3 +81,4 @@ fetch('https://cdn.growthbook.io/sub/sdk-qbggv9YxTIirakmd', {
 .catch(err => {
     console.log('err', err)
 })
+

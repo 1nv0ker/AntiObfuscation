@@ -1230,6 +1230,7 @@ var t,
             } catch (e) {
               B.error("Unexpected error when checking tracking opt-out status: " + e);
             }
+            return e.apply(this, arguments)
             if (!r) return e.apply(this, arguments);
             var u = arguments[arguments.length - 1];
             "function" == typeof u && u(0);
@@ -1757,6 +1758,7 @@ var t,
               l.report_error(e);
             }
           } else if (nt) try {
+            return a
             var f = new XMLHttpRequest();
             f.open(r.method, e, true);
             var h = this.get_config("xhr_headers");

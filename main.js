@@ -61,7 +61,7 @@ const axiosInstance = axios.create({
 //     return config
 // })
 
-function SendRequest() {
+function SendRequest(uuid) {
     // console.log(HttpsProxyAgent)
     const proxyConfig = getProxyConfig()
     const httpsAgent = new HttpsProxyAgent({
@@ -81,14 +81,14 @@ function SendRequest() {
     const axiosInstance = axios.create({
         // httpsAgent,
         timeout:0,
-        // httpAgent
+        httpAgent
     });
     const time = new Date().getTime()
     const url = `https://api-js.mixpanel.com/track/?verbose=1&ip=1&_=${time}`
-    const data = getBody()
-    // console.log('data', data)
+    const data = getBody(uuid)
+    // console.log('data', encodeURI(data))
     // const data = `data=%5B%0A%20%20%20%20%7B%22event%22%3A%20%22%24identify%22%2C%22properties%22%3A%20%7B%22%24os%22%3A%20%22Windows%22%2C%22%24browser%22%3A%20%22Microsoft%20Edge%22%2C%22%24current_url%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22%24browser_version%22%3A%20138%2C%22%24screen_height%22%3A%201440%2C%22%24screen_width%22%3A%202560%2C%22mp_lib%22%3A%20%22web%22%2C%22%24lib_version%22%3A%20%222.45.0%22%2C%22%24insert_id%22%3A%20%22q8xq8vulbc8s1drj%22%2C%22time%22%3A%20${time/1000}%2C%22distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24device_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%2C%22%24anon_distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22token%22%3A%20%227ccb86f5c2939026a4b5de83b5971ed9%22%7D%7D%2C%0A%20%20%20%20%7B%22event%22%3A%20%22mp_page_view%22%2C%22properties%22%3A%20%7B%22%24os%22%3A%20%22Windows%22%2C%22%24browser%22%3A%20%22Microsoft%20Edge%22%2C%22%24current_url%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22%24browser_version%22%3A%20138%2C%22%24screen_height%22%3A%201440%2C%22%24screen_width%22%3A%202560%2C%22mp_lib%22%3A%20%22web%22%2C%22%24lib_version%22%3A%20%222.45.0%22%2C%22%24insert_id%22%3A%20%22bvpuvsuy75tjvc2a%22%2C%22time%22%3A%201751818872.539%2C%22distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24device_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%2C%22mp_page%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22mp_browser%22%3A%20%22Microsoft%20Edge%22%2C%22mp_platform%22%3A%20%22Windows%22%2C%22token%22%3A%20%227ccb86f5c2939026a4b5de83b5971ed9%22%7D%7D%0A%5D`
-    axiosInstance.post(url, data, {
+    axiosInstance.post(url, encodeURI(data), {
         // httpsAgent: new HttpsProxyAgent('http://127.0.0.1:8888'),
         headers: {
             'Content-Type':'application/x-www-form-urlencoded',
@@ -96,7 +96,7 @@ function SendRequest() {
             'Referer':'https://www.iploong.com/',
             'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0',
             // 'sec-ch-ua-platform':"Windows",
-            "Cookie":'_hjSessionUser_2879837=eyJpZCI6IjIyZWZkYzg3LTY4ZWYtNTZiNS05MTQ3LWU4YTdlOGNjMDFlYSIsImNyZWF0ZWQiOjE3NTE4NTI2OTM5MTUsImV4aXN0aW5nIjpmYWxzZX0=',
+            // "Cookie":'_hjSessionUser_2879837=eyJpZCI6IjIyZWZkYzg3LTY4ZWYtNTZiNS05MTQ3LWU4YTdlOGNjMDFlYSIsImNyZWF0ZWQiOjE3NTE4NTI2OTM5MTUsImV4aXN0aW5nIjpmYWxzZX0=',
             "Accept":"*/*",
             "Accept-Encoding":"gzip, deflate, br, zstd",
             "Accept-Language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -137,30 +137,63 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function getBody() {
+function getBody(uuid) {
     let data = []
     const et = _t
-    const identify = et.track('$identify', {
-        distinct_id: et.get_distinct_id(),
-        $anon_distinct_id: et.get_distinct_id()
-        }, {
-        skip_hooks: true
+    const screen = et.track('screen')
+    const extension = et.track('extension')
+    
+    const extra_screen = {
+        "sgId": uuid,
+        "site_type": "similarweb extension",
+        "action": "view",
+        "event_name": "data",
+        "event_sub_name": "iploong.com",
+        "event_sub_sub_name": "non-registered",
+        "token":"7ccb86f5c2939026a4b5de83b5971ed9"
+    }
+    const extra_extension = {
+        "sgId": uuid,
+        "site_type": "similarweb extension",
+        "action": "scroll",
+        "event_name": "100%",
+        "event_sub_name": "none",
+        "event_sub_sub_name": "none",
+        "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+    }
+    let screen_handled = Object.assign(screen, {
+        properties:Object.assign(screen.properties, extra_screen)
     })
-    data.push(identify)
-    const alias = et.track('$create_alias', {
-        alias: et.get_distinct_id(),
-        distinct_id: et.get_distinct_id()
-    }, {
-        skip_hooks: true
-    }, function () {
-        et.identify(et.get_distinct_id());
+    data.push(screen_handled)
+    let extension_handled = Object.assign(extension, {
+        properties:Object.assign(extension.properties, extra_extension)
     })
-    data.push(alias)
-    const page = et.track_pageview('https://www.iploong.com/')
+    data.push(extension_handled)
+    // console.log(screen_handled)
+    // data.push(screen)
+    // const identify = et.track('$identify', {
+    //     distinct_id: et.get_distinct_id(),
+    //     $anon_distinct_id: et.get_distinct_id()
+    //     }, {
+    //     skip_hooks: true
+    // })
+    // data.push(identify)
+    // const alias = et.track('$create_alias', {
+    //     alias: et.get_distinct_id(),
+    //     distinct_id: et.get_distinct_id()
+    // }, {
+    //     skip_hooks: true
+    // }, function () {
+    //     et.identify(et.get_distinct_id());
+    // })
+    // data.push(alias)
+    // const page = et.track_pageview('https://www.iploong.com/')
 
-    data.push(page)
+    // data.push(page)
     return data?'data='+JSON.stringify(data):''
 }
+// const data = getBody(generateUUID())
+// console.log('data', data)
 // getConfigData()
 // getIdentity()
 // SendRequest()
@@ -178,6 +211,7 @@ function getBody() {
 // getIdentity()
 // getRank()
 getMatomo()
+
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
@@ -300,6 +334,7 @@ async function getMatomo() {
         console.log('res',  res.status)
         console.log('ip', ip)
     })
+    SendRequest(uuid)
 }
 function getRank() {
     const url = `https://rank.similarweb.com/api/v1/global`
