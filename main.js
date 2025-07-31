@@ -210,8 +210,18 @@ function getBody(uuid) {
 // getConfig()
 // getIdentity()
 // getRank()
-getMatomo()
-
+// getMatomo()
+getGuidKey()
+function getGuidKey() {
+    let guidkey = ''
+    // let str =  (65536 * (1 + Math.random(Date.now() + 12)) | 0).toString(30).substring(1)
+    let n = 9
+    for (let i=0;i<n;i++) {
+        guidkey = guidkey + (65536 * (1 + Math.random(Date.now() + 12)) | 0).toString(30).substring(1)
+    }
+    console.log(guidkey)
+    return guidkey
+}
 function getConfig() {
     const url = 'https://rank.similarweb.com/content/config'
     const data = {
@@ -337,8 +347,13 @@ async function getMatomo() {
     SendRequest(uuid)
 }
 function getRank() {
+    //q=https://www.iploong.com
+    //app = AAEAAAAAAG0dLwIRJgAAAAAAAAAAAAAAAAAAAAAAAAA
     const url = `https://rank.similarweb.com/api/v1/global`
-    const data = `e=q%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26link%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26prev%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26hreferer%3D%26iow%3D1268531150%26tt%3Dreload%26meta%3Dexthead%26ts%3D1752127827943%26ch%3D0%26s%3Da86cb34f5%26pid%3Deck6djkk4n7t19neetfdqg7an68%26tmv%3D6%26md%3D21%26v%3D1%26sub%3D6.12.9%26app%3DAAEAAAAAAG0dLwIRJgAAAAAAAAAAAAAAAAAAAAAAAAA%253D&decode=0`
+    const data = `e=q%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26link%3Dhttps%253A%252F%252F
+    www.iploong.com%252F%2523third%26prev%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26hreferer%3D%
+    26iow%3D1268531150%26tt%3Dreload%26meta%3Dexthead%26ts%3D1752127827943%26ch%3D0%26s%3Da86cb34f5%26pid%3Deck6djkk4n7t19neetfdqg7an68%26tmv%3D6%26md%3D21
+    %26v%3D1%26sub%3D6.12.9%26app%3DAAEAAAAAAG0dLwIRJgAAAAAAAAAAAAAAAAAAAAAAAAA%253D&decode=0`
     axios.post(url, data)
     .then(res => {
         console.log('res', res)
