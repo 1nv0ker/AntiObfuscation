@@ -61,7 +61,7 @@ const axiosInstance = axios.create({
 //     return config
 // })
 
-function SendRequest(uuid) {
+async function SendRequest(uuid, type) {
     // console.log(HttpsProxyAgent)
     const proxyConfig = getProxyConfig()
     const httpsAgent = new HttpsProxyAgent({
@@ -85,10 +85,10 @@ function SendRequest(uuid) {
     });
     const time = new Date().getTime()
     const url = `https://api-js.mixpanel.com/track/?verbose=1&ip=1&_=${time}`
-    const data = getBody(uuid)
+    const data = getBody(uuid, type)
     // console.log('data', encodeURI(data))
     // const data = `data=%5B%0A%20%20%20%20%7B%22event%22%3A%20%22%24identify%22%2C%22properties%22%3A%20%7B%22%24os%22%3A%20%22Windows%22%2C%22%24browser%22%3A%20%22Microsoft%20Edge%22%2C%22%24current_url%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22%24browser_version%22%3A%20138%2C%22%24screen_height%22%3A%201440%2C%22%24screen_width%22%3A%202560%2C%22mp_lib%22%3A%20%22web%22%2C%22%24lib_version%22%3A%20%222.45.0%22%2C%22%24insert_id%22%3A%20%22q8xq8vulbc8s1drj%22%2C%22time%22%3A%20${time/1000}%2C%22distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24device_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%2C%22%24anon_distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22token%22%3A%20%227ccb86f5c2939026a4b5de83b5971ed9%22%7D%7D%2C%0A%20%20%20%20%7B%22event%22%3A%20%22mp_page_view%22%2C%22properties%22%3A%20%7B%22%24os%22%3A%20%22Windows%22%2C%22%24browser%22%3A%20%22Microsoft%20Edge%22%2C%22%24current_url%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22%24browser_version%22%3A%20138%2C%22%24screen_height%22%3A%201440%2C%22%24screen_width%22%3A%202560%2C%22mp_lib%22%3A%20%22web%22%2C%22%24lib_version%22%3A%20%222.45.0%22%2C%22%24insert_id%22%3A%20%22bvpuvsuy75tjvc2a%22%2C%22time%22%3A%201751818872.539%2C%22distinct_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24device_id%22%3A%20%22197e08aa6d8f80-091d9dd2ecb501-4c657b58-384000-197e08aa6d925d2%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%2C%22mp_page%22%3A%20%22https%3A%2F%2Fwww.iploong.com%2F%22%2C%22mp_browser%22%3A%20%22Microsoft%20Edge%22%2C%22mp_platform%22%3A%20%22Windows%22%2C%22token%22%3A%20%227ccb86f5c2939026a4b5de83b5971ed9%22%7D%7D%0A%5D`
-    axiosInstance.post(url, encodeURI(data), {
+    return await axiosInstance.post(url, encodeURI(data), {
         // httpsAgent: new HttpsProxyAgent('http://127.0.0.1:8888'),
         headers: {
             'Content-Type':'application/x-www-form-urlencoded',
@@ -137,7 +137,7 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-function getBody(uuid) {
+function getBody(uuid, type=1) {
     let data = []
     const et = _t
     const screen = et.track('screen')
@@ -164,11 +164,16 @@ function getBody(uuid) {
     let screen_handled = Object.assign(screen, {
         properties:Object.assign(screen.properties, extra_screen)
     })
-    data.push(screen_handled)
+    if (type==1) {
+        data.push(screen_handled)
+    }
+    
     let extension_handled = Object.assign(extension, {
         properties:Object.assign(extension.properties, extra_extension)
     })
-    data.push(extension_handled)
+    if (type==2) {
+        data.push(extension_handled)
+    }
     // console.log(screen_handled)
     // data.push(screen)
     // const identify = et.track('$identify', {
@@ -210,8 +215,8 @@ function getBody(uuid) {
 // getConfig()
 // getIdentity()
 // getRank()
-// getMatomo()
-getGuidKey()
+getMatomo()
+// getGuidKey()
 function getGuidKey() {
     let guidkey = ''
     // let str =  (65536 * (1 + Math.random(Date.now() + 12)) | 0).toString(30).substring(1)
@@ -288,6 +293,7 @@ async function getMatomo() {
 //     .then(response => {
 //     console.log('当前服务器公网IP:', response.data.ip);
 //   })
+    await SendRequest(uuid, 1)    
     await axiosInstance.post(url, null, {
         
         headers: {
@@ -317,6 +323,7 @@ async function getMatomo() {
     })
     const data2 = getMatomoParams('www.iploong.com', uuid, 2)
     const url2 = `https://matomo.similarweb.io/matomo.php?`+data2
+    await SendRequest(uuid, 2)
     await axiosInstance.post(url2, null, {
         
         headers: {
@@ -344,7 +351,7 @@ async function getMatomo() {
         console.log('res',  res.status)
         console.log('ip', ip)
     })
-    SendRequest(uuid)
+    
 }
 function getRank() {
     //q=https://www.iploong.com
