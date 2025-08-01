@@ -142,7 +142,7 @@ function getBody(uuid, type=1) {
     const et = _t
     const screen = et.track('screen')
     const extension = et.track('extension')
-    
+    const dropdown = et.track('dropdown')
     const extra_screen = {
         "sgId": uuid,
         "site_type": "similarweb extension",
@@ -161,6 +161,33 @@ function getBody(uuid, type=1) {
         "event_sub_sub_name": "none",
         "token": "7ccb86f5c2939026a4b5de83b5971ed9"
     }
+    const drop_data = {
+        "sgId": uuid,
+        "action": "open",
+        "site_type": "similarweb extension",
+        "event_name": "traffic sources",
+        "event_sub_name": "historical data",
+        "event_sub_sub_name": "non-registered",
+        "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+    }
+    const drop_data1 = {
+        "sgId": uuid,
+        "site_type": "similarweb extension",
+        "action": "open",
+        "event_name": "keywords",
+        "event_sub_name": "organic & paid",
+        "event_sub_sub_name": "non-registered",
+        "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+    }
+    const drop_data2 = {
+        "sgId": uuid,
+        "site_type": "similarweb extension",
+        "action": "open",
+        "event_name": "visit over time",
+        "event_sub_name": "historical data",
+        "event_sub_sub_name": "non-registered",
+        "token": "7ccb86f5c2939026a4b5de83b5971ed9"
+    }
     let screen_handled = Object.assign(screen, {
         properties:Object.assign(screen.properties, extra_screen)
     })
@@ -171,8 +198,26 @@ function getBody(uuid, type=1) {
     let extension_handled = Object.assign(extension, {
         properties:Object.assign(extension.properties, extra_extension)
     })
+    let drop_handled1 = Object.assign(dropdown, {
+        properties:Object.assign(dropdown.properties, drop_data)
+    })
+    let drop_handled2 = Object.assign(dropdown, {
+        properties:Object.assign(dropdown.properties, drop_data1)
+    })
+    let drop_handled3 = Object.assign(dropdown, {
+        properties:Object.assign(dropdown.properties, drop_data2)
+    })
     if (type==2) {
         data.push(extension_handled)
+    }
+    if (type ==3) {
+        data.push(drop_handled1)
+    }
+    if (type ==4) {
+        data.push(drop_handled2)
+    }
+    if (type ==5) {
+        data.push(drop_handled3)
     }
     // console.log(screen_handled)
     // data.push(screen)
@@ -353,9 +398,49 @@ async function getMatomo() {
     })
     
 }
+function getLink(currentUrl, lastUrl) {
+    return {
+        q:currentUrl,
+        link:lastUrl,
+        prev:lastUrl,
+        hreferer:lastUrl,
+        iow:123//tab.id,
+        //tt=link&meta=exthead&et=https://www.baidu.com/ chrome.webNavigation.onCommitted参数 transitionType
+    }
+}
+function getHt() {
+    return {
+        type: 'anf_1',
+        data:[
+            {
+                "v2":2,"xm":"874","ym":"261","xc":"910","yc":"275"
+            }
+        ],
+        //tabs事件
+        meta: {"id":475638406,
+            "url":"https://www.iploong.com/login?redirect=/usercenter/dashboard",
+            "frameId":44
+        }
+    }
+}
+function getCommit() {
+    return {
+        ts:new Date().getTime(),
+        ch:'0',
+        s:'a86cb34f5',
+        pid:getGuidKey(),
+        tmv: 6,
+        md: 21,
+        v: 1,
+        sub: '6.12.9',
+        app: 'AAEAAAAAAG0dLwIRJgAAAAAAAAAAAAAAAAAAAAAAAAA',
+        ht:''//tab相关
+    }
+}
 function getRank() {
     //q=https://www.iploong.com
     //app = AAEAAAAAAG0dLwIRJgAAAAAAAAAAAAAAAAAAAAAAAAA
+    //pid=guid_key
     const url = `https://rank.similarweb.com/api/v1/global`
     const data = `e=q%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26link%3Dhttps%253A%252F%252F
     www.iploong.com%252F%2523third%26prev%3Dhttps%253A%252F%252Fwww.iploong.com%252F%2523third%26hreferer%3D%
